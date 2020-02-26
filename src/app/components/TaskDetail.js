@@ -3,23 +3,37 @@ import { connect } from "react-redux";
 import {Link} from "react-router-dom";
 import * as mutations from "../store/mutations";
 
-function TaskDetail({ id, comments, task, groups, isComplete, setTaskCompletion})  {
+function TaskDetail({
+                        id,
+                        comments,
+                        task,
+                        groups,
+                        isComplete,
+                        setTaskComplete,
+                        setTaskGroup,
+                        setTaskName
+                    })  {
         return (
             <div>
                 Task Detail
                 <div>
-                    <input value={task.id} />
+                    <input
+                        onChange={setTaskName}
+                        value={task.name} />
                 </div>
 
 
                 <div>
                     <button
-                        onClick={() => setTaskCompletion(id, !isComplete)}
+                        onClick={() => setTaskComplete(id, !isComplete)}
                     >{isComplete ? "Reopen" : "Complete"}</button>
                 </div>
 
                 <div>
-                    <select>
+                    <select
+                        onChange={setTaskGroup}
+                        value={task.group}
+                    >
                         {groups.map(group => (
                             <option key={group.id} value={group.id}>
                                 {group.name}
@@ -53,8 +67,14 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     const id = ownProps.match.params.id;
     return {
-        setTaskCompletion: (id, isComplete) => {
+        setTaskComplete: (id, isComplete) => {
             dispatch(mutations.setTaskComplete(id, isComplete))
+        },
+        setTaskGroup: (event) => {
+            dispatch(mutations.setTaskGroup(id, event.target.value))
+        },
+        setTaskName: (event) => {
+            dispatch(mutations.setTaskName(id, event.target.value))
         }
     }
 };
