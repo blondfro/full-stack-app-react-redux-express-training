@@ -1,6 +1,11 @@
 import { store } from "./store";
 
+import React from "react";
+import { render } from "react-dom";
+import Main from "./components/Main";
+
+render(
+    <Main />, document.getElementById("app")
+);
 
 
-console.log("hello world");
-console.log(store.getState());
