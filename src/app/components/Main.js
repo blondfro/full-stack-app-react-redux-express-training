@@ -1,13 +1,15 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { store } from "../store";
+
 import Dashboard  from "./Dashboard";
+import { Route } from "react-router-dom";
+
 
 export function Main() {
     return (
-        <Provider store={store}>
-            <Dashboard />
-        </Provider>)
+        <div>
+            <Route exact path="/dashboard" component={Dashboard} />
+            {/*<Route exact path="/dashboard" component={Dashboard} />*/}
+        </div>)
 }
 
 export default Main;
