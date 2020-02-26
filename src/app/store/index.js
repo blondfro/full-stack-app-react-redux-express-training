@@ -12,7 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = createStore(
     combineReducers({
         tasks(tasks = defaultState.tasks, action){
-            switch (action.types) {
+            switch (action.type) {
                 case mutations.CREATE_TASK:
                     return [...tasks, {
                         id: action.taskID,
