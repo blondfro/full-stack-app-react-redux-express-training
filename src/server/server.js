@@ -18,6 +18,21 @@ export const addNewTask = async task => {
   await collection.insertOne(task);
 };
 
+export const updateTask = async task => {
+    let { id, group, isComplete, name } = task;
+    let db = await connectDB();
+    let collection = db.collection("tasks");
+    if(group) {
+        await collection.updateOne({id}, {$set: {group}})
+    }
+    if(name) {
+        await collection.updateOne({id}, {$set: {name}})
+    }
+    if(isComplete !== undefined) {
+        await collection.updateOne({id}, {$set: {isComplete}})
+    }
+};
+
 
 app.post("/task/new", async (req, res) => {
     let task = req.body.task;
@@ -25,7 +40,11 @@ app.post("/task/new", async (req, res) => {
     res.state(200).send();
 });
 
-
+app.put("/task/update", async (req, res) => {
+    let task = req.body.task;
+    await updateTask(task);
+    res.state(200).send();
+});
 
 app.listen(port, console.log("Server Listening on port: " + port));
 
